@@ -5,6 +5,7 @@ const adminRoutes = require("./Routes/adminRoutes");
 const vehicleRoutes = require("./modules/vehicles/vehicle.routes");
 const dashboardRoutes = require("./Modules/Dashboard/dashboard.routes");
 const driverRoutes = require("./Modules/Driver/driver.routes");
+const assignmentRoutes = require("./Modules/Assignment/assignment.routes");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/vehicles", vehicleRoutes);
 app.use("/fleet-manager/dashboard", dashboardRoutes);
 app.use("/drivers", driverRoutes);
+app.use("/assignments", assignmentRoutes);
 
 
 app.use((req, res) => {
