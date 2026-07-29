@@ -2,8 +2,8 @@ import navbar from '../components/navbar';
 
 export default function Page() {
     return (
-        <div className='bg-[#E2DFFF] h-screen w-screen text-black flex flex-col px-8'>
-            {/* NavBar */}
+        <div className=' h-screen w-screen text-black flex flex-col px-8  bg-[#E2DFFF]'>
+            {/* NavBar*/}
             {navbar()}
 
             {/* First section */}
@@ -17,22 +17,22 @@ export default function Page() {
                         <h3>Here is your Summery</h3>
                         <div className='flex flex-row gap-4 mt-4'>
                             <div className=' bg-[#F2EFFF] p-4 rounded-xl w-[50%] flex flex-col gap-2 shadow-md'>
-                                <text className='text-sm'>Total Vehicles</text>
-                                <text className='text-2xl font-bold'>100</text>
+                                <p className='text-sm'>Total Vehicles</p>
+                                <p className='text-2xl font-bold'>100</p>
                             </div>
                             <div className=' bg-[#F2EFFF] p-4 rounded-xl w-[50%] flex flex-col gap-2 shadow-md'>
-                                <text className='text-sm'>Overdue</text>
-                                <text className='text-2xl font-bold text-red-500'>5</text>
+                                <p className='text-sm'>Overdue</p>
+                                <p className='text-2xl font-bold text-red-500'>5</p>
                             </div>
                         </div>
                         <div className='flex flex-row gap-4 mt-4'>
                             <div className=' bg-[#F2EFFF] p-4 rounded-xl w-[50%] flex flex-col gap-2 shadow-md'>
-                                <text className='text-sm'>Expiring Soon</text>
-                                <text className='text-2xl font-bold'>3</text>
+                                <p className='text-sm'>Expiring Soon</p>
+                                <p className='text-2xl font-bold'>3</p>
                             </div>
                             <div className=' bg-[#F2EFFF] p-4 rounded-xl w-[50%] flex flex-col gap-2 shadow-md'>
-                                <text className='text-sm'>High Risk</text>
-                                <text className='text-2xl font-bold'>9</text>
+                                <p className='text-sm'>High Risk</p>
+                                <p className='text-2xl font-bold'>9</p>
                             </div>
                         </div>
                     </div>
