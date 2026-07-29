@@ -1,6 +1,18 @@
-const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+const path = require("path");
+const fs = require("fs");
+const dotenv = require("dotenv");
 
+const envPath = path.resolve(__dirname, "../../.env");
+
+console.log("ENV PATH:", envPath);
+console.log("FILE EXISTS:", fs.existsSync(envPath));
+
+const result = dotenv.config({ path: envPath });
+
+console.log("DOTENV RESULT:", result);
+
+console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
+console.log("SUPABASE_SECRET_KEY:", process.env.SUPABASE_SECRET_KEY);
 const { createClient } = require("@supabase/supabase-js");
 const WebSocket = require("ws");
 
