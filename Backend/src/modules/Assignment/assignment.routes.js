@@ -28,9 +28,5 @@ router.patch(
     controller.cancelAssignment
 );
 
-router.post(
-    "/:id/override",
-    controller.overrideAssignment
-);
 
 module.exports = router;

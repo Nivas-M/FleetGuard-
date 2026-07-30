@@ -267,63 +267,7 @@ const cancelAssignment = async (assignmentId) => {
 };
 
 
-const overrideAssignment = async (
-    assignmentId,
-    reason,
-    managerId
-) => {
-
-    if (!reason)
-        throw new Error("Override reason is required.");
-
-    const { data: assignment } = await supabase
-        .from("vehicle_assignments")
-        .select("*")
-        .eq("assignment_id", assignmentId)
-        .single();
-
-    if (!assignment)
-        throw new Error("Assignment not found.");
-
-    if (assignment.override_used)
-        throw new Error("Override already exists.");
-
-    const { error: assignmentError } = await supabase
-        .from("vehicle_assignments")
-        .update({
-            override_used: true
-        })
-        .eq("assignment_id", assignmentId);
-
-    if (assignmentError)
-        throw new Error(assignmentError.message);
-
-    const { error: logError } = await supabase
-        .from("override_logs")
-        .insert({
-
-            assignment_id: assignmentId,
-
-            approved_by: managerId,
-
-            reason
-
-        });
-
-    if (logError)
-        throw new Error(logError.message);
-
-    return {
-
-        assignmentId,
-
-        override: true,
-
-        reason
-
-    };
-
-};module.exports = {
+module.exports = {
 
     createAssignment,
 
@@ -335,8 +279,5 @@ const overrideAssignment = async (
 
     completeAssignment,
 
-    cancelAssignment,
-
-    overrideAssignment
-
+    cancelAssignment
 };
