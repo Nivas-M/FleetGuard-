@@ -29,7 +29,7 @@ const authenticate = async (req, res, next) => {
       .from("profiles")
       .select("*")
       .eq("id", user.id)
-      .single();
+      .maybeSingle();
 
     console.log("profile:", profile);
     console.log("profileError:", profileError);
