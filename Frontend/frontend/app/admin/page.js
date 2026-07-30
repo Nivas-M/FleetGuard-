@@ -141,13 +141,6 @@ export default function Page() {
                                 <h2 className="text-2xl">Welcome Back,</h2>
                                 <h2 className='text-4xl'>Admin</h2>
                             </div>
-                            <button
-                                onClick={fetchAdminData}
-                                disabled={loading}
-                                className="px-3 py-1.5 text-xs font-medium bg-[#F2EFFF] hover:bg-white text-gray-700 rounded-lg shadow-sm transition-all"
-                            >
-                                {loading ? 'Refreshing...' : '🔄 Refresh Data'}
-                            </button>
                         </div>
                         <h3 className="mt-2 text-gray-700">Here is your Summary</h3>
                         
