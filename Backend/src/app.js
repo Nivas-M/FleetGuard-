@@ -8,6 +8,7 @@ const driverRoutes = require("./Modules/Driver/driver.routes");
 const assignmentRoutes = require("./Modules/Assignment/assignment.routes");
 const complianceRoutes = require("./Modules/Compliance/compliance.routes");
 const serviceRoutes = require("./Modules/Service/service.routes");
+const authRoutes = require("./Routes/authRoutes");
 
 const app = express();
 
@@ -24,6 +25,8 @@ app.use("/drivers", driverRoutes);
 app.use("/assignments", assignmentRoutes);
 app.use("/", complianceRoutes);
 app.use("/", serviceRoutes);
+app.use("/api/auth", authRoutes);
+
 
 app.use((req, res) => {
   res.status(404).json({
