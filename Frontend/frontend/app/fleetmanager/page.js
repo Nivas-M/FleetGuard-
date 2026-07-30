@@ -131,9 +131,9 @@ export default function FleetManagerDashboard() {
   // Helper Functions
   const getVehicleComplianceStatus = (v) => {
     const statuses = [v.insurance.status, v.inspection.status, v.emissions.status, v.service.status];
-    if (statuses.includes('Overdue')) return { status: 'Non-Compliant', badge: 'bg-rose-50 text-rose-900 border border-rose-200' };
-    if (statuses.includes('Expiring Soon') || statuses.includes('Due Soon')) return { status: 'Action Required', badge: 'bg-amber-50 text-amber-900 border border-amber-200' };
-    return { status: 'Compliant', badge: 'bg-emerald-100 text-emerald-800' };
+    if (statuses.includes('Overdue')) return { status: 'Non-Compliant', badge: 'bg-[#CBF1F5] text-[#061d23]' };
+    if (statuses.includes('Expiring Soon') || statuses.includes('Due Soon')) return { status: 'Action Required', badge: 'bg-[#A6E3E9]/40 text-[#061d23]' };
+    return { status: 'Compliant', badge: 'bg-[#E3FDFD] text-[#061d23]' };
   };
 
   const getNonCompliantReasons = (v) => {
@@ -245,7 +245,7 @@ export default function FleetManagerDashboard() {
   });
 
   return (
-    <div className="bg-slate-50 min-h-screen text-slate-800 font-sans p-5 sm:p-7 lg:p-8">
+    <div className="bg-slate-50 min-h-screen text-slate-900 font-sans p-5 sm:p-7 lg:p-8">
       <div className="max-w-[1470px] mx-auto flex flex-col gap-7">
         
         {/* Top Navbar */}
@@ -253,48 +253,48 @@ export default function FleetManagerDashboard() {
 
         {/* Header Title Section */}
         <div className="flex flex-col gap-1.5">
-          <h2 className="text-sm font-medium text-slate-500">Welcome Back</h2>
-          <h1 className="text-4xl font-bold text-slate-900 tracking-tight">Fleet Manager Dashboard</h1>
-          <p className="text-sm text-slate-600 mt-0.5">
+          <h2 className="text-sm font-bold text-[#71C9CE] uppercase tracking-wider">Welcome Back</h2>
+          <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">Fleet Manager Dashboard</h1>
+          <p className="text-sm text-slate-600 mt-0.5 font-medium">
             At-a-glance fleet compliance, driver assignment enforcement, and predictive risk summary.
           </p>
         </div>
 
-        {/* DASHBOARD GRID (Left = Fleet Stats 1st, Driver Assignment, Risk Summary; Right = Notifications, Recent Overrides, Compliance Table down-right) */}
+        {/* DASHBOARD GRID (Border-Free Cards Blending Smoothly into Canvas) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-start">
           
           {/* LEFT MAIN COLUMN (Span 6) */}
           <div className="lg:col-span-6 flex flex-col gap-7">
             
-            {/* Left Card 1 (TOP 1st): Fleet Summary Stat Cards */}
-            <div className="bg-white rounded-xl p-6 border border-slate-200 flex flex-col gap-5 shadow-sm">
+            {/* Left Card 1 (TOP 1st): Fleet Summary Stat Cards (Border-free blended card) */}
+            <div className="bg-white/70 rounded-xl p-6 border-0 flex flex-col gap-5">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold text-slate-900">Fleet Summary Stats</h3>
-                <span className="text-xs sm:text-sm text-slate-500">Live Metrics</span>
+                <span className="text-xs sm:text-sm font-semibold text-slate-500">Live Metrics</span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-                <div className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 flex flex-col gap-1">
-                  <span className="text-xs sm:text-sm font-medium text-slate-500">Total Vehicles</span>
-                  <span className="text-3xl font-bold text-slate-900">{totalVehiclesCount}</span>
+                <div className="p-3.5 bg-[#E3FDFD]/60 rounded-lg border-0 flex flex-col gap-1">
+                  <span className="text-xs sm:text-sm font-semibold text-slate-600">Total Vehicles</span>
+                  <span className="text-3xl font-extrabold text-slate-900">{totalVehiclesCount}</span>
                 </div>
-                <div className="p-3.5 bg-rose-50 rounded-lg border border-rose-200 flex flex-col gap-1">
-                  <span className="text-xs sm:text-sm font-medium text-rose-900">Overdue</span>
-                  <span className="text-3xl font-bold text-rose-900">{overdueCount}</span>
+                <div className="p-3.5 bg-[#CBF1F5]/80 rounded-lg border-0 flex flex-col gap-1">
+                  <span className="text-xs sm:text-sm font-bold text-slate-800">Overdue</span>
+                  <span className="text-3xl font-extrabold text-slate-900">{overdueCount}</span>
                 </div>
-                <div className="p-3.5 bg-amber-50 rounded-lg border border-amber-200 flex flex-col gap-1">
-                  <span className="text-xs sm:text-sm font-medium text-amber-900">Expiring Soon</span>
-                  <span className="text-3xl font-bold text-amber-900">{expiringSoonCount}</span>
+                <div className="p-3.5 bg-[#A6E3E9]/40 rounded-lg border-0 flex flex-col gap-1">
+                  <span className="text-xs sm:text-sm font-bold text-slate-800">Expiring Soon</span>
+                  <span className="text-3xl font-extrabold text-slate-900">{expiringSoonCount}</span>
                 </div>
-                <div className="p-3.5 bg-purple-50 rounded-lg border border-purple-200 flex flex-col gap-1">
-                  <span className="text-xs sm:text-sm font-medium text-purple-900">High Risk</span>
-                  <span className="text-3xl font-bold text-purple-900">{highRiskCount}</span>
+                <div className="p-3.5 bg-[#71C9CE]/20 rounded-lg border-0 flex flex-col gap-1">
+                  <span className="text-xs sm:text-sm font-bold text-slate-800">High Risk</span>
+                  <span className="text-3xl font-extrabold text-slate-900">{highRiskCount}</span>
                 </div>
               </div>
             </div>
 
             {/* Left Card 2: Quick Driver Assignment */}
-            <div className="bg-white rounded-xl p-6 border border-slate-200 flex flex-col justify-between gap-5 shadow-sm">
+            <div className="bg-white/70 rounded-xl p-6 border-0 flex flex-col justify-between gap-5">
               <div>
                 <h3 className="text-lg font-bold text-slate-900">Quick Driver Assignment</h3>
                 <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
@@ -303,10 +303,10 @@ export default function FleetManagerDashboard() {
               </div>
 
               {assignmentNotice && (
-                <div className={`p-3 rounded-lg border text-xs sm:text-sm font-medium ${
+                <div className={`p-3 rounded-lg border-0 text-xs sm:text-sm font-semibold ${
                   assignmentNotice.type === 'success'
-                    ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-                    : 'bg-rose-50 text-rose-900 border-rose-200'
+                    ? 'bg-[#E3FDFD] text-slate-900'
+                    : 'bg-[#CBF1F5] text-slate-900'
                 }`}>
                   {assignmentNotice.text}
                 </div>
@@ -314,14 +314,14 @@ export default function FleetManagerDashboard() {
 
               <form onSubmit={handleAssignDriver} className="flex flex-col gap-3.5">
                 <div className="flex flex-col gap-1">
-                  <label className="text-xs sm:text-sm font-medium text-slate-700">Select Vehicle</label>
+                  <label className="text-xs sm:text-sm font-bold text-slate-800">Select Vehicle</label>
                   <select
                     value={selectedVehicleId}
                     onChange={(e) => {
                       setSelectedVehicleId(e.target.value);
                       setAssignmentNotice(null);
                     }}
-                    className="bg-white text-slate-800 text-xs sm:text-sm font-medium px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-slate-400"
+                    className="bg-white/90 text-slate-900 text-xs sm:text-sm font-semibold px-3.5 py-2.5 rounded-lg border-0 focus:outline-none focus:ring-1 focus:ring-[#71C9CE]"
                   >
                     <option value="">-- Choose Vehicle --</option>
                     {vehicles.map((v) => {
@@ -337,25 +337,25 @@ export default function FleetManagerDashboard() {
 
                 {/* Hard Block Warning */}
                 {selectedVehicleObj && isSelectedVehicleBlocked && (
-                  <div className="p-3.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-900 text-xs sm:text-sm flex flex-col gap-1">
-                    <span className="font-bold flex items-center gap-1.5">
-                      <svg className="w-4 h-4 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="p-3.5 rounded-lg bg-[#CBF1F5]/70 border-0 text-slate-900 text-xs sm:text-sm flex flex-col gap-1">
+                    <span className="font-bold flex items-center gap-1.5 text-slate-900">
+                      <svg className="w-4 h-4 text-[#71C9CE] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                       </svg>
                       Hard Block Active
                     </span>
-                    <p className="text-xs text-rose-800">
+                    <p className="text-xs text-slate-700 font-medium">
                       Overdue items: {nonCompliantIssues.join(', ')}.
                     </p>
                   </div>
                 )}
 
                 <div className="flex flex-col gap-1">
-                  <label className="text-xs sm:text-sm font-medium text-slate-700">Select Driver</label>
+                  <label className="text-xs sm:text-sm font-bold text-slate-800">Select Driver</label>
                   <select
                     value={selectedDriverName}
                     onChange={(e) => setSelectedDriverName(e.target.value)}
-                    className="bg-white text-slate-800 text-xs sm:text-sm font-medium px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-slate-400"
+                    className="bg-white/90 text-slate-900 text-xs sm:text-sm font-semibold px-3.5 py-2.5 rounded-lg border-0 focus:outline-none focus:ring-1 focus:ring-[#71C9CE]"
                   >
                     <option value="">-- Choose Driver --</option>
                     {driversList.map((d) => (
@@ -369,7 +369,7 @@ export default function FleetManagerDashboard() {
                 {/* Override Reason Field */}
                 {isSelectedVehicleBlocked && (
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs sm:text-sm font-medium text-amber-900">
+                    <label className="text-xs sm:text-sm font-bold text-slate-800">
                       Override Reason (Mandatory)
                     </label>
                     <textarea
@@ -377,14 +377,14 @@ export default function FleetManagerDashboard() {
                       value={overrideReason}
                       onChange={(e) => setOverrideReason(e.target.value)}
                       placeholder="Enter reason..."
-                      className="bg-white text-slate-800 text-xs sm:text-sm p-3 rounded-lg border border-amber-300 focus:outline-none focus:ring-1 focus:ring-amber-400"
+                      className="bg-white/90 text-slate-900 text-xs sm:text-sm p-3 rounded-lg border-0 focus:outline-none focus:ring-1 focus:ring-[#71C9CE]"
                     />
                   </div>
                 )}
 
                 <button
                   type="submit"
-                  className="bg-slate-900 hover:bg-slate-800 text-white font-medium text-xs sm:text-sm px-4.5 py-2.5 rounded-lg transition-colors mt-1"
+                  className="bg-[#71C9CE] hover:bg-[#5bb8bc] text-slate-950 font-extrabold text-xs sm:text-sm px-4.5 py-2.5 rounded-lg transition-colors mt-1"
                 >
                   {isSelectedVehicleBlocked ? 'Override & Assign' : 'Assign Driver'}
                 </button>
@@ -392,7 +392,7 @@ export default function FleetManagerDashboard() {
             </div>
 
             {/* Left Card 3: Risk Flags Summary */}
-            <div className="bg-white rounded-xl p-6 border border-slate-200 flex flex-col justify-between gap-5 shadow-sm">
+            <div className="bg-white/70 rounded-xl p-6 border-0 flex flex-col justify-between gap-5">
               <div>
                 <h3 className="text-lg font-bold text-slate-900">Risk Flags Summary</h3>
                 <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
@@ -401,26 +401,26 @@ export default function FleetManagerDashboard() {
               </div>
 
               <div className="flex flex-col gap-3.5">
-                <div className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-between">
-                  <span className="text-xs sm:text-sm font-medium text-slate-600">Low Risk</span>
-                  <span className="text-xl font-bold text-slate-900">{lowRiskCount} vehicles</span>
+                <div className="p-3.5 bg-[#E3FDFD]/60 rounded-lg border-0 flex items-center justify-between">
+                  <span className="text-xs sm:text-sm font-semibold text-slate-700">Low Risk</span>
+                  <span className="text-xl font-extrabold text-slate-900">{lowRiskCount} vehicles</span>
                 </div>
-                <div className="p-3.5 bg-amber-50 rounded-lg border border-amber-200 flex items-center justify-between">
-                  <span className="text-xs sm:text-sm font-medium text-amber-900">Medium Risk</span>
-                  <span className="text-xl font-bold text-amber-900">{medRiskCount} vehicles</span>
+                <div className="p-3.5 bg-[#CBF1F5]/80 rounded-lg border-0 flex items-center justify-between">
+                  <span className="text-xs sm:text-sm font-bold text-slate-800">Medium Risk</span>
+                  <span className="text-xl font-extrabold text-slate-900">{medRiskCount} vehicles</span>
                 </div>
-                <div className="p-3.5 bg-rose-50 rounded-lg border border-rose-200 flex items-center justify-between">
-                  <span className="text-xs sm:text-sm font-medium text-rose-900">High Risk</span>
-                  <span className="text-xl font-bold text-rose-900">{highRiskCount} vehicles</span>
+                <div className="p-3.5 bg-[#A6E3E9]/50 rounded-lg border-0 flex items-center justify-between">
+                  <span className="text-xs sm:text-sm font-bold text-slate-800">High Risk</span>
+                  <span className="text-xl font-extrabold text-slate-900">{highRiskCount} vehicles</span>
                 </div>
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <span className="text-xs text-slate-500 font-medium">Fleet Risk Ratio</span>
-                <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden flex">
-                  <div style={{ width: `${(lowRiskCount / totalVehiclesCount) * 100}%` }} className="bg-emerald-500 h-full"></div>
-                  <div style={{ width: `${(medRiskCount / totalVehiclesCount) * 100}%` }} className="bg-amber-500 h-full"></div>
-                  <div style={{ width: `${(highRiskCount / totalVehiclesCount) * 100}%` }} className="bg-rose-500 h-full"></div>
+                <span className="text-xs text-slate-600 font-bold">Fleet Risk Ratio</span>
+                <div className="w-full bg-slate-200/60 rounded-full h-2.5 overflow-hidden flex border-0">
+                  <div style={{ width: `${(lowRiskCount / totalVehiclesCount) * 100}%` }} className="bg-[#E3FDFD] h-full"></div>
+                  <div style={{ width: `${(medRiskCount / totalVehiclesCount) * 100}%` }} className="bg-[#A6E3E9] h-full"></div>
+                  <div style={{ width: `${(highRiskCount / totalVehiclesCount) * 100}%` }} className="bg-[#71C9CE] h-full"></div>
                 </div>
               </div>
             </div>
@@ -431,25 +431,25 @@ export default function FleetManagerDashboard() {
           <div className="lg:col-span-6 flex flex-col gap-7">
             
             {/* Right Card 1: Notifications Panel */}
-            <div className="bg-white rounded-xl p-6 border border-slate-200 flex flex-col gap-5 shadow-sm">
+            <div className="bg-white/70 rounded-xl p-6 border-0 flex flex-col gap-5">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold text-slate-900">Notifications Panel</h3>
-                <div className="flex items-center gap-1 text-xs sm:text-sm font-medium">
+                <div className="flex items-center gap-1 text-xs sm:text-sm font-bold">
                   <button
                     onClick={() => setNotificationTab('all')}
-                    className={`px-2.5 py-1 rounded ${notificationTab === 'all' ? 'bg-slate-900 text-white' : 'text-slate-500'}`}
+                    className={`px-2.5 py-1 rounded transition-colors ${notificationTab === 'all' ? 'bg-[#71C9CE] text-slate-950' : 'text-slate-600'}`}
                   >
                     All ({allNotifications.length})
                   </button>
                   <button
                     onClick={() => setNotificationTab('overdue')}
-                    className={`px-2.5 py-1 rounded ${notificationTab === 'overdue' ? 'bg-slate-900 text-white' : 'text-slate-500'}`}
+                    className={`px-2.5 py-1 rounded transition-colors ${notificationTab === 'overdue' ? 'bg-[#71C9CE] text-slate-950' : 'text-slate-600'}`}
                   >
                     Overdue ({allNotifications.filter(n => n.type === 'overdue').length})
                   </button>
                   <button
                     onClick={() => setNotificationTab('expiring')}
-                    className={`px-2.5 py-1 rounded ${notificationTab === 'expiring' ? 'bg-slate-900 text-white' : 'text-slate-500'}`}
+                    className={`px-2.5 py-1 rounded transition-colors ${notificationTab === 'expiring' ? 'bg-[#71C9CE] text-slate-950' : 'text-slate-600'}`}
                   >
                     Expiring ({allNotifications.filter(n => n.type === 'expiring').length})
                   </button>
@@ -460,29 +460,29 @@ export default function FleetManagerDashboard() {
                 {filteredNotifications.map((notif) => (
                   <div
                     key={notif.id}
-                    className={`p-3.5 rounded-lg border text-xs sm:text-sm flex flex-col gap-1 ${
+                    className={`p-3.5 rounded-lg border-0 text-xs sm:text-sm flex flex-col gap-1 ${
                       notif.type === 'overdue'
-                        ? 'bg-rose-50 border-rose-200 text-rose-900'
-                        : 'bg-amber-50 border-amber-200 text-amber-900'
+                        ? 'bg-[#CBF1F5]/80 text-slate-900'
+                        : 'bg-[#E3FDFD] text-slate-900'
                     }`}
                   >
-                    <div className="flex items-center justify-between font-semibold">
+                    <div className="flex items-center justify-between font-bold">
                       <span>{notif.title}</span>
-                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-white/80">
+                      <span className="text-xs font-extrabold px-2 py-0.5 rounded bg-white/90">
                         {notif.vehicle}
                       </span>
                     </div>
-                    <span className="text-xs opacity-90">{notif.detail}</span>
+                    <span className="text-xs text-slate-700 font-medium">{notif.detail}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Right Card 2: Recent Overrides (Mini-Log) */}
-            <div className="bg-white rounded-xl p-6 border border-slate-200 flex flex-col gap-5 shadow-sm">
+            <div className="bg-white/70 rounded-xl p-6 border-0 flex flex-col gap-5">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold text-slate-900">Recent Overrides (Mini-Log)</h3>
-                <span className="text-xs sm:text-sm text-slate-500">Audit Trail</span>
+                <span className="text-xs sm:text-sm text-slate-500 font-semibold">Audit Trail</span>
               </div>
 
               <div className="flex flex-col gap-3.5">
@@ -490,16 +490,16 @@ export default function FleetManagerDashboard() {
                   <p className="text-xs sm:text-sm text-slate-500 italic">No recent overrides logged.</p>
                 ) : (
                   overrides.map((ovr) => (
-                    <div key={ovr.id} className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 flex flex-col gap-2 text-xs sm:text-sm">
-                      <div className="flex items-center justify-between font-medium text-slate-900">
-                        <span className="font-bold text-slate-900">{ovr.vehicle}</span>
-                        <span className="text-xs text-slate-500">{ovr.timestamp}</span>
+                    <div key={ovr.id} className="p-3.5 bg-slate-100/60 rounded-lg border-0 flex flex-col gap-2 text-xs sm:text-sm">
+                      <div className="flex items-center justify-between font-bold text-slate-900">
+                        <span>{ovr.vehicle}</span>
+                        <span className="text-xs text-slate-500 font-medium">{ovr.timestamp}</span>
                       </div>
-                      <p className="text-slate-600 italic bg-white p-2.5 rounded border border-slate-200 text-xs">
+                      <p className="text-slate-800 italic bg-[#E3FDFD]/60 p-2.5 rounded border-0 text-xs font-medium">
                         "{ovr.reason}"
                       </p>
-                      <div className="text-xs text-slate-500">
-                        Authorized by: <span className="font-medium text-slate-700">{ovr.who}</span>
+                      <div className="text-xs text-slate-600 font-medium">
+                        Authorized by: <span className="font-bold text-slate-900">{ovr.who}</span>
                       </div>
                     </div>
                   ))
@@ -508,53 +508,53 @@ export default function FleetManagerDashboard() {
             </div>
 
             {/* Right Card 3 (DOWN-RIGHT): Compliance Overview Table */}
-            <div className="bg-white rounded-xl p-6 border border-slate-200 flex flex-col gap-5 shadow-sm">
+            <div className="bg-white/70 rounded-xl p-6 border-0 flex flex-col gap-5">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                   <h2 className="text-lg font-bold text-slate-900">Compliance Overview Table</h2>
-                  <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
+                  <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
                     Per-vehicle status across Insurance, Inspection, Emissions, Service, and Assigned Driver.
                   </p>
                 </div>
 
                 {/* Filter Buttons */}
-                <div className="flex flex-wrap gap-2 text-xs sm:text-sm">
+                <div className="flex flex-wrap gap-2 text-xs sm:text-sm font-bold">
                   <button
                     onClick={() => setTableFilter('all')}
-                    className={`px-3.5 py-1.5 rounded-lg border transition-colors ${
+                    className={`px-3.5 py-1.5 rounded-lg border-0 transition-colors ${
                       tableFilter === 'all'
-                        ? 'bg-slate-900 text-white border-slate-900 font-medium'
-                        : 'bg-white text-slate-600 border-slate-300 hover:bg-slate-50'
+                        ? 'bg-[#71C9CE] text-slate-950'
+                        : 'bg-white/80 text-slate-700 hover:bg-[#E3FDFD]'
                     }`}
                   >
                     All ({vehicles.length})
                   </button>
                   <button
                     onClick={() => setTableFilter('non-compliant')}
-                    className={`px-3.5 py-1.5 rounded-lg border transition-colors ${
+                    className={`px-3.5 py-1.5 rounded-lg border-0 transition-colors ${
                       tableFilter === 'non-compliant'
-                        ? 'bg-slate-900 text-white border-slate-900 font-medium'
-                        : 'bg-white text-slate-600 border-slate-300 hover:bg-slate-50'
+                        ? 'bg-[#71C9CE] text-slate-950'
+                        : 'bg-white/80 text-slate-700 hover:bg-[#E3FDFD]'
                     }`}
                   >
                     Non-Compliant ({overdueCount})
                   </button>
                   <button
                     onClick={() => setTableFilter('expiring')}
-                    className={`px-3.5 py-1.5 rounded-lg border transition-colors ${
+                    className={`px-3.5 py-1.5 rounded-lg border-0 transition-colors ${
                       tableFilter === 'expiring'
-                        ? 'bg-slate-900 text-white border-slate-900 font-medium'
-                        : 'bg-white text-slate-600 border-slate-300 hover:bg-slate-50'
+                        ? 'bg-[#71C9CE] text-slate-950'
+                        : 'bg-white/80 text-slate-700 hover:bg-[#E3FDFD]'
                     }`}
                   >
                     Action Required ({expiringSoonCount})
                   </button>
                   <button
                     onClick={() => setTableFilter('high-risk')}
-                    className={`px-3.5 py-1.5 rounded-lg border transition-colors ${
+                    className={`px-3.5 py-1.5 rounded-lg border-0 transition-colors ${
                       tableFilter === 'high-risk'
-                        ? 'bg-slate-900 text-white border-slate-900 font-medium'
-                        : 'bg-white text-slate-600 border-slate-300 hover:bg-slate-50'
+                        ? 'bg-[#71C9CE] text-slate-950'
+                        : 'bg-white/80 text-slate-700 hover:bg-[#E3FDFD]'
                     }`}
                   >
                     High Risk ({highRiskCount})
@@ -562,10 +562,10 @@ export default function FleetManagerDashboard() {
                 </div>
               </div>
 
-              {/* Table (Minimal & Airy) */}
-              <div className="overflow-x-auto border border-slate-200/80 rounded-xl">
+              {/* Table (Border-Free Blended Layout) */}
+              <div className="overflow-x-auto rounded-xl border-0">
                 <table className="w-full text-left text-xs sm:text-sm">
-                  <thead className="bg-slate-50/70 text-slate-500 uppercase tracking-wider text-[11px] font-semibold border-b border-slate-200/80">
+                  <thead className="bg-[#CBF1F5]/40 text-slate-700 uppercase tracking-wider text-[11px] font-bold border-0">
                     <tr>
                       <th className="px-4 py-3.5">Vehicle</th>
                       <th className="px-4 py-3.5">Assigned Driver</th>
@@ -576,34 +576,34 @@ export default function FleetManagerDashboard() {
                       <th className="px-4 py-3.5 text-right">Status</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 bg-white">
+                  <tbody className="divide-y divide-slate-100/60 bg-white/70">
                     {filteredVehicles.map((v) => {
                       const comp = getVehicleComplianceStatus(v);
                       return (
-                        <tr key={v.id} className="hover:bg-slate-50/60 transition-colors">
+                        <tr key={v.id} className="hover:bg-[#E3FDFD]/50 transition-colors">
                           <td className="px-4 py-4">
                             <div className="flex flex-col">
                               <span className="font-bold text-slate-900">{v.plate}</span>
                               <span className="text-xs text-slate-500">{v.model}</span>
                             </div>
                           </td>
-                          <td className="px-4 py-4 font-medium text-slate-700">
+                          <td className="px-4 py-4 font-semibold text-slate-700">
                             {v.assignedDriver}
                           </td>
-                          <td className="px-4 py-4 text-slate-600">
+                          <td className="px-4 py-4 text-slate-600 font-medium">
                             {v.insurance.status}
                           </td>
-                          <td className="px-4 py-4 text-slate-600">
+                          <td className="px-4 py-4 text-slate-600 font-medium">
                             {v.inspection.status}
                           </td>
-                          <td className="px-4 py-4 text-slate-600">
+                          <td className="px-4 py-4 text-slate-600 font-medium">
                             {v.emissions.status}
                           </td>
-                          <td className="px-4 py-4 text-slate-600">
+                          <td className="px-4 py-4 text-slate-600 font-medium">
                             {v.service.status}
                           </td>
                           <td className="px-4 py-4 text-right">
-                            <span className="font-semibold text-slate-900">
+                            <span className="font-bold text-slate-900">
                               {comp.status}
                             </span>
                           </td>
