@@ -1,20 +1,46 @@
-const authorize = (...roles) => {
+const supabase = require("../Config/supabase");
 
-    return (req, res, next) => {
+const roleMiddleware = (...allowedRoles) => {
+    return async (req, res, next) => {
+        try {
 
-        if (!roles.includes(req.user.role)) {
+            const userId = req.user.id;
 
-            return res.status(403).json({
+            console.log("JWT User ID:", userId);
+
+const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", userId)
+    .single();
+
+
+if (error) {
+    return res.status(404).json({
+        success: false,
+        message: error.message,
+        error,
+    });
+}
+
+            if (!allowedRoles.includes(data.role)) {
+                return res.status(403).json({
+                    success: false,
+                    message: "Access denied",
+                });
+            }
+
+            req.role = data.role;
+
+            next();
+
+        } catch (err) {
+            return res.status(500).json({
                 success: false,
-                message: "You are not authorized."
+                message: err.message,
             });
-
         }
-
-        next();
-
     };
-
 };
 
-module.exports = authorize;
+module.exports = roleMiddleware;
