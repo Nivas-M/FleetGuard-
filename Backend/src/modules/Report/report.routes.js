@@ -5,24 +5,30 @@ const router = express.Router();
 const authenticate = require("../../Middleware/authMiddleware");
 const authorize = require("../../Middleware/roleMiddleware");
 
-const controller = require("./notification.controller");
+const controller = require("./report.controller");
 
 router.use(authenticate);
+
 router.use(authorize("Fleet Manager"));
 
 router.get(
-    "/",
-    controller.getNotifications
+    "/fleet-summary",
+    controller.getFleetSummary
 );
 
-router.patch(
-    "/:notificationId/read",
-    controller.markAsRead
+router.get(
+    "/compliance",
+    controller.getComplianceReport
 );
 
-router.patch(
-    "/read-all",
-    controller.markAllAsRead
+router.get(
+    "/service",
+    controller.getServiceReport
+);
+
+router.get(
+    "/assignments",
+    controller.getAssignmentReport
 );
 
 module.exports = router;

@@ -9,11 +9,9 @@ const assignmentRoutes = require("./Modules/Assignment/assignment.routes");
 const complianceRoutes = require("./Modules/Compliance/compliance.routes");
 const serviceRoutes = require("./Modules/Service/service.routes");
 const authRoutes = require("./Routes/authRoutes");
-const preTripRoutes =
-require("./Modules/PreTrip/preTrip.routes");
-const notificationRoutes =
-require("./Modules/Notification/notification.routes");
-
+const preTripRoutes =require("./modules/PreTrip/preTrip.routes");
+const notificationRoutes =require("./Modules/Notification/notification.routes");
+const reportRoutes =require("./Modules/Report/report.routes");
 
 const app = express();
 
@@ -36,11 +34,11 @@ app.use("/vehicles", vehicleRoutes);
 app.use("/fleet-manager/dashboard", dashboardRoutes);
 app.use("/drivers", driverRoutes);
 app.use("/assignments", assignmentRoutes);
-app.use("/", complianceRoutes);
-app.use("/", serviceRoutes);
-
-app.use("/",preTripRoutes);
-app.use("/", notificationRoutes);
+app.use("/compliance", complianceRoutes);
+app.use("/services", serviceRoutes);
+app.use("/reports", reportRoutes);
+app.use("/preTrips",preTripRoutes);
+app.use("/notifications", notificationRoutes);
 
 
 app.use((req, res) => {

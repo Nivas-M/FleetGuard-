@@ -8,21 +8,12 @@ const authorize = require("../../Middleware/roleMiddleware");
 const controller = require("./preTrip.controller");
 
 router.use(authenticate);
-router.use(authorize("Fleet Manager"));
+router.use(authorize("Fleet Manager", "Admin"));
 
-router.get(
-    "/pretrip",
-    controller.getAllInspections
-);
+router.get("", controller.getAllInspections);
 
-router.get(
-    "/pretrip/failed",
-    controller.getFailedInspections
-);
+router.get("/failed", controller.getFailedInspections);
 
-router.get(
-    "/pretrip/:inspectionId",
-    controller.getInspectionById
-);
+router.get("/:inspectionId", controller.getInspectionById);
 
 module.exports = router;

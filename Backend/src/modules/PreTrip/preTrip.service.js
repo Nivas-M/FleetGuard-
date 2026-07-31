@@ -1,12 +1,10 @@
-const supabase =
-require("../../Config/db");
+const supabase = require("../../Config/db");
 
 const getAllInspections = async () => {
-
-    const { data, error } =
-    await supabase
+  const { data, error } = await supabase
     .from("pre_trip_checks")
-    .select(`
+    .select(
+      `
         *,
         vehicles(
             registration_number,
@@ -16,27 +14,22 @@ const getAllInspections = async () => {
         profiles(
             name
         )
-    `)
-    .order(
-        "inspection_date",
-        {
-            ascending:false
-        }
-    );
+    `,
+    )
+    .order("check_date", {
+      ascending: false,
+    });
 
-    if(error)
-        throw new Error(error.message);
+  if (error) throw new Error(error.message);
 
-    return data;
-
+  return data;
 };
 
 const getFailedInspections = async () => {
-
-    const { data, error } =
-    await supabase
+  const { data, error } = await supabase
     .from("pre_trip_checks")
-    .select(`
+    .select(
+      `
         *,
         vehicles(
             registration_number,
@@ -46,60 +39,40 @@ const getFailedInspections = async () => {
         profiles(
             name
         )
-    `)
-    .eq(
-        "status",
-        "Failed"
+    `,
     )
-    .order(
-        "inspection_date",
-        {
-            ascending:false
-        }
-    );
+    .eq("status", "Failed")
+    .order("check_date", {
+      ascending: false,
+    });
 
-    if(error)
-        throw new Error(error.message);
+  if (error) throw new Error(error.message);
 
-    return data;
-
+  return data;
 };
 
-
-const getInspectionById = async (
-    inspectionId
-) => {
-
-    const { data, error } =
-    await supabase
+const getInspectionById = async (inspectionId) => {
+  const { data, error } = await supabase
     .from("pre_trip_checks")
-    .select(`
+    .select(
+      `
         *,
         vehicles(*),
         profiles(*)
-    `)
-    .eq(
-        "check_id",
-        inspectionId
+    `,
     )
+    .eq("check_id", inspectionId)
     .single();
 
-    if(error)
-        throw new Error(
-            "Inspection not found."
-        );
+  if (error) throw new Error("Inspection not found.");
 
-    return data;
-
+  return data;
 };
 
+module.exports = {
+  getAllInspections,
 
-module.exports={
+  getFailedInspections,
 
-    getAllInspections,
-
-    getFailedInspections,
-
-    getInspectionById
-
-}
+  getInspectionById,
+};
