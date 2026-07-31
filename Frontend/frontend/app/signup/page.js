@@ -2,33 +2,61 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import api from '../../lib/api';
 
 export default function SignupPage() {
-    const router = Router();
+    const router = useRouter();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [role, setRole] = useState('fleet-manager');
+    const [error, setError] = useState('');
+    const [successMsg, setSuccessMsg] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    function Router() {
-        try {
-            return useRouter();
-        } catch {
-            return null;
-        }
-    }
+    const roleMap = {
+        'fleet-manager': 'Fleet Manager',
+        'admin': 'Admin',
+        'driver': 'Driver',
+        'service-center': 'Service Center',
+    };
 
-    const handleSignup = (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
-        // Redirect to appropriate dashboard after sign up
-        const targetRoute = role === 'admin' ? '/admin' :
-                            role === 'driver' ? '/driver' :
-                            role === 'service-center' ? '/servicecenter' : '/fleetmanager';
-        if (router) {
-            router.push(targetRoute);
-        } else {
-            window.location.href = targetRoute;
+        setError('');
+        setSuccessMsg('');
+
+        if (password !== confirmPassword) {
+            setError('Passwords do not match.');
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const formattedRole = roleMap[role] || 'Fleet Manager';
+            const response = await api.post('/api/auth/register', {
+                name: username,
+                email,
+                password,
+                role: formattedRole,
+            });
+
+            if (response.data?.success) {
+                setSuccessMsg('Account created successfully! Redirecting to login...');
+                setTimeout(() => {
+                    router.push('/login');
+                }, 1500);
+            } else {
+                setError(response.data?.message || 'Registration failed.');
+            }
+        } catch (err) {
+            console.error('Signup error:', err);
+            const errorMessage = err.response?.data?.message || err.message || 'Unable to register account. Please try again.';
+            setError(errorMessage);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -53,13 +81,31 @@ export default function SignupPage() {
                         Start managing your fleet operations and compliance with confidence
                     </p>
 
-                    {/* Signup Card Box - Compact Natural Content Fit */}
+                    {/* Signup Card Box */}
                     <div className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm w-full">
+                        {error && (
+                            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs font-semibold rounded-xl flex items-center gap-2">
+                                <svg className="w-4 h-4 text-red-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span>{error}</span>
+                            </div>
+                        )}
+
+                        {successMsg && (
+                            <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold rounded-xl flex items-center gap-2">
+                                <svg className="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>{successMsg}</span>
+                            </div>
+                        )}
+
                         {/* Signup Form */}
                         <form onSubmit={handleSignup} className="flex flex-col gap-3.5">
                             <div>
                                 <label htmlFor="username" className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
-                                    Username
+                                    Full Name / Username
                                 </label>
                                 <input
                                     type="text"
@@ -87,7 +133,7 @@ export default function SignupPage() {
                                 />
                             </div>
 
-                            {/* Passwords in the same line */}
+                            {/* Passwords grid */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                                 <div>
                                     <label htmlFor="password" className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
@@ -137,12 +183,20 @@ export default function SignupPage() {
                                 </select>
                             </div>
 
-                            {/* Primary CTA Button - Cyan Accent per designtemplate.md */}
+                            {/* Primary CTA Button */}
                             <button
                                 type="submit"
-                                className="bg-[#71C9CE] hover:bg-[#5bb8bc] text-slate-950 font-extrabold py-3 px-4 rounded-xl text-sm transition-all shadow-sm cursor-pointer mt-1"
+                                disabled={loading}
+                                className="bg-[#71C9CE] hover:bg-[#5bb8bc] disabled:opacity-50 disabled:cursor-not-allowed text-slate-950 font-extrabold py-3 px-4 rounded-xl text-sm transition-all shadow-sm cursor-pointer mt-1 flex items-center justify-center gap-2"
                             >
-                                Sign Up
+                                {loading ? (
+                                    <>
+                                        <div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                                        <span>Creating Account...</span>
+                                    </>
+                                ) : (
+                                    'Sign Up'
+                                )}
                             </button>
                         </form>
 
@@ -164,12 +218,9 @@ export default function SignupPage() {
                             className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
-                        
                     </div>
                 </div>
             </main>
         </div>
     );
 }
-
-

@@ -2,26 +2,52 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import api from '../../lib/api';
+import { useAuth } from '../context/AuthContext';
 
 export default function LoginPage() {
-    const router = Router();
+    const router = useRouter();
+    const { login } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    function Router() {
-        try {
-            return useRouter();
-        } catch {
-            return null;
-        }
-    }
-
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (router) {
-            router.push('/fleetmanager');
-        } else {
-            window.location.href = '/fleetmanager';
+        setError('');
+        setLoading(true);
+
+        try {
+            const response = await api.post('/api/auth/login', { email, password });
+            const data = response.data;
+
+            if (data.success && data.accessToken) {
+                // Save user & token in global auth context + localStorage
+                login(data.user, data.accessToken);
+
+                // Route dynamically based on user role
+                const userRole = data.user?.role?.toLowerCase() || '';
+                if (userRole === 'admin') {
+                    router.push('/admin');
+                } else if (userRole === 'fleet manager' || userRole === 'fleet-manager') {
+                    router.push('/fleetmanager');
+                } else if (userRole === 'driver') {
+                    router.push('/driver');
+                } else if (userRole === 'service center' || userRole === 'service-center') {
+                    router.push('/servicecenter');
+                } else {
+                    router.push('/fleetmanager');
+                }
+            } else {
+                setError(data.message || 'Login failed. Please check your credentials.');
+            }
+        } catch (err) {
+            console.error('Login error:', err);
+            const errorMessage = err.response?.data?.message || err.message || 'Unable to sign in. Please verify your connection.';
+            setError(errorMessage);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -48,6 +74,15 @@ export default function LoginPage() {
 
                     {/* Login Card Box */}
                     <div className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm w-full">
+                        {error && (
+                            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs font-semibold rounded-xl flex items-center gap-2">
+                                <svg className="w-4 h-4 text-red-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span>{error}</span>
+                            </div>
+                        )}
+
                         {/* Email / Password Form */}
                         <form onSubmit={handleLogin} className="flex flex-col gap-4">
                             <div>
@@ -79,12 +114,20 @@ export default function LoginPage() {
                                 />
                             </div>
 
-                            {/* Primary CTA Button - Cyan Accent per designtemplate.md */}
+                            {/* Primary CTA Button */}
                             <button
                                 type="submit"
-                                className="bg-[#71C9CE] hover:bg-[#5bb8bc] text-slate-950 font-extrabold py-3 px-4 rounded-xl text-sm transition-all shadow-sm cursor-pointer mt-2"
+                                disabled={loading}
+                                className="bg-[#71C9CE] hover:bg-[#5bb8bc] disabled:opacity-50 disabled:cursor-not-allowed text-slate-950 font-extrabold py-3 px-4 rounded-xl text-sm transition-all shadow-sm cursor-pointer mt-2 flex items-center justify-center gap-2"
                             >
-                                Login
+                                {loading ? (
+                                    <>
+                                        <div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                                        <span>Logging in...</span>
+                                    </>
+                                ) : (
+                                    'Login'
+                                )}
                             </button>
                         </form>
 
@@ -106,11 +149,9 @@ export default function LoginPage() {
                             className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
-                        
                     </div>
                 </div>
             </main>
         </div>
     );
 }
-
