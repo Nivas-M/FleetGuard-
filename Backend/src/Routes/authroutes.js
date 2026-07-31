@@ -1,36 +1,35 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const { getDashboard } = require('../Controllers/adminController');
-const { getVehicles, getVehicleById } = require('../Controllers/vehicleController');
+const authController = require("../Controllers/authController");
 
 const authMiddleware = require("../Middleware/authMiddleware");
 const roleMiddleware = require("../Middleware/roleMiddleware");
+
+router.post("/register", authController.register);
+router.post("/login", authController.login);
+
+router.get("/test", authMiddleware, (req, res) => {
+    res.json({
+        success: true,
+        message: "Token is valid",
+        user: req.user,
+    });
+});
 
 router.get(
     "/admin",
     authMiddleware,
     roleMiddleware("Admin"),
     (req, res) => {
-
         res.json({
             success: true,
             message: "Welcome Admin",
             user: req.user,
             role: req.role,
         });
-
     }
 );
 
-router.get(
-    "/dashboard",
-    authMiddleware,
-    getDashboard
-);
-
-router.get('/vehicles', getVehicles);
-router.get('/vehicles/:vehicleId', getVehicleById);
-
-
 module.exports = router;
+console.log("Auth routes loaded");

@@ -1,29 +1,20 @@
-const supabase = require("../Config/db");
+const supabase = require("../Config/supabase");
 
-const authenticate = async (req, res, next) => {
-  try {
-    const authHeader = req.headers.authorization;
+const authMiddleware = async (req, res, next) => {
+    try {
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({
-        success: false,
-        message: "Authentication token missing.",
-      });
-    }
+        const authHeader = req.headers.authorization;
 
-    const token = authHeader.split(" ")[1];
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({
+                success: false,
+                message: "Access token is required",
+            });
+        }
 
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser(token);
+        const token = authHeader.split(" ")[1];
 
-    if (error || !user) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid token.",
-      });
-    }
+        const { data, error } = await supabase.auth.getUser(token);
 
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
@@ -31,29 +22,18 @@ const authenticate = async (req, res, next) => {
       .eq("id", user.id)
       .maybeSingle();
 
-    console.log("profile:", profile);
-    console.log("profileError:", profileError);
+        req.user = data.user;
 
-    if (profileError || !profile) {
-      return res.status(404).json({
-        success: false,
-        message: "Profile not found.",
-      });
+        next();
+
+    } catch (err) {
+
+        return res.status(500).json({
+            success: false,
+            message: err.message,
+        });
+
     }
-
-    req.user = {
-      ...user,
-      role: profile.role,
-      name: profile.name,
-    };
-
-    next();
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: err.message,
-    });
-  }
 };
 
-module.exports = authenticate;
+module.exports = authMiddleware;
