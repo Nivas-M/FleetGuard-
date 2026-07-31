@@ -12,7 +12,7 @@ const fleetManagerRoutes = require("./Routes/fleetManagerRoutes");
 // Feature Modules
 const vehicleRoutes = require("./Modules/vehicles/vehicle.routes");
 const dashboardRoutes = require("./Modules/Dashboard/dashboard.routes");
-const driverModuleRoutes = require("./Modules/Driver/driver.routes");
+const driverModuleRoutes = require("./Routes/driver.routes");
 const assignmentRoutes = require("./Modules/Assignment/assignment.routes");
 const mechanicRoutes =require("./Routes/mechanicRoutes");
 

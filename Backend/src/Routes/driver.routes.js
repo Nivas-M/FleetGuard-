@@ -2,8 +2,8 @@ const express = require("express");
 
 const router = express.Router();
 
-const authenticate = require("../../Middleware/authMiddleware");
-const authorize = require("../../Middleware/roleMiddleware");
+const authenticate = require("../Middleware/authMiddleware");
+const authorize = require("../Middleware/roleMiddleware");
 
 const driverController = require("./driver.controller");
 
