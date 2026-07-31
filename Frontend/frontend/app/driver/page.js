@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import Navbar from '../components/navbar';
+import { useAuth } from '../context/AuthContext';
 
 export default function DriverDashboard() {
+  const { user } = useAuth();
   // Mock Driver Assigned Vehicle Data
   const driverVehicles = [
     {
@@ -163,7 +165,9 @@ export default function DriverDashboard() {
 
         {/* Header Title Section */}
         <div className="flex flex-col gap-1.5">
-          <h2 className="text-sm font-bold text-[#71C9CE] uppercase tracking-wider">Welcome Back</h2>
+          <h2 className="text-sm font-bold text-[#71C9CE] uppercase tracking-wider">
+            Welcome Back{user?.name ? ` ${user.name}` : ''}
+          </h2>
           <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">Driver Dashboard</h1>
           <p className="text-sm text-slate-600 mt-0.5 font-medium">
             Verify road-legal vehicle status, complete pre-trip safety checklist, and view compliance alerts.
