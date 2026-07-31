@@ -8,6 +8,7 @@ const authRoutes = require("./Routes/authRoutes");
 const adminRoutes = require("./Routes/adminRoutes");
 const fleetManagerRoutes = require("./Routes/fleetManagerRoutes");
 //const driverAuthRoutes = require("./Routes/driverRoutes");
+const driverRoutes = require("./Routes/driverRoutes");
 
 // Feature Modules
 const vehicleRoutes = require("./Modules/vehicles/vehicle.routes");
@@ -32,6 +33,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/fleet-manager", fleetManagerRoutes);
 //app.use("/api/driver", driverAuthRoutes);
+app.use("/api/driver", driverRoutes);
 
 // Feature APIs
 app.use("/vehicles", vehicleRoutes);
