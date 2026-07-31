@@ -16,12 +16,11 @@ const authMiddleware = async (req, res, next) => {
 
         const { data, error } = await supabase.auth.getUser(token);
 
-        if (error || !data.user) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid or expired token",
-            });
-        }
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .maybeSingle();
 
         req.user = data.user;
 
