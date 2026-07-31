@@ -14,6 +14,7 @@ const vehicleRoutes = require("./Modules/vehicles/vehicle.routes");
 const dashboardRoutes = require("./Modules/Dashboard/dashboard.routes");
 const driverModuleRoutes = require("./Modules/Driver/driver.routes");
 const assignmentRoutes = require("./Modules/Assignment/assignment.routes");
+const mechanicRoutes =require("./Routes/mechanicRoutes");
 
 const app = express();
 
@@ -38,11 +39,16 @@ app.use("/fleet-manager/dashboard", dashboardRoutes);
 app.use("/drivers", driverModuleRoutes);
 app.use("/assignments", assignmentRoutes);
 
+app.use(
+    "/api/mechanic",
+    mechanicRoutes
+);
+
+
 app.use((req, res) => {
   res.status(404).json({
     success: false,
     message: "Route not found.",
   });
 });
-
 module.exports = app;
