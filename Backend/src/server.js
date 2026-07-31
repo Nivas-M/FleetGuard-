@@ -1,9 +1,9 @@
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+require('dotenv').config();
 
 
 console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
-console.log("SUPABASE_SECRET_KEY:", process.env.SUPABASE_SECRET_KEY);
+console.log("SUPABASE_SERVICE_ROLE_KEY:", process.env.SUPABASE_SERVICE_ROLE_KEY);
 const app = require('./app');
 
 const PORT = Number(process.env.PORT || 3000);
