@@ -36,7 +36,7 @@ const authMiddleware = async (req, res, next) => {
     }
 
     req.user = data.user;
-
+    console.log("Authenticated User:", data.user.id);
     next();
   } catch (err) {
     return res.status(500).json({

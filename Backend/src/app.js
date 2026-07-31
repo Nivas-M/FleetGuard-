@@ -9,6 +9,11 @@ const assignmentRoutes = require("./Modules/Assignment/assignment.routes");
 const complianceRoutes = require("./Modules/Compliance/compliance.routes");
 const serviceRoutes = require("./Modules/Service/service.routes");
 const authRoutes = require("./Routes/authRoutes");
+const preTripRoutes =
+require("./Modules/PreTrip/preTrip.routes");
+const notificationRoutes =
+require("./Modules/Notification/notification.routes");
+
 
 const app = express();
 
@@ -17,6 +22,14 @@ app.use(express.json());
 
 app.get("/health", (req, res) => res.status(200).json({ status: "ok" }));
 
+
+
+app.use((req, res, next) => {
+  console.log(req.method, req.originalUrl);
+  next();
+});
+
+app.use("/api/auth", authRoutes);
 app.use("/admin", adminRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/vehicles", vehicleRoutes);
@@ -25,7 +38,9 @@ app.use("/drivers", driverRoutes);
 app.use("/assignments", assignmentRoutes);
 app.use("/", complianceRoutes);
 app.use("/", serviceRoutes);
-app.use("/api/auth", authRoutes);
+
+app.use("/",preTripRoutes);
+app.use("/", notificationRoutes);
 
 
 app.use((req, res) => {

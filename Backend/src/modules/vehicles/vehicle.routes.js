@@ -8,7 +8,7 @@ const authorize = require("../../Middleware/roleMiddleware");
 const vehicleController = require("./vehicle.controller");
 
 router.use(authenticate);
-router.use(authorize("Fleet Manager"));
+router.use(authorize("Fleet Manager", "Admin"));
 
 router.post("/", vehicleController.createVehicle);
 
