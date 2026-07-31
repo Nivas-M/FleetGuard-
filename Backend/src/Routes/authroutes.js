@@ -32,3 +32,4 @@ router.get(
 );
 
 module.exports = router;
+console.log("Auth routes loaded");
