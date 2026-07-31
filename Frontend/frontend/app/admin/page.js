@@ -265,22 +265,9 @@ export default function AdminDashboard() {
 
         {/* Header Title Section */}
         <div className="flex flex-col gap-1.5">
-          <div className="flex items-center gap-2">
-            <h2 className="text-sm font-bold text-[#71C9CE] uppercase tracking-wider">Welcome Back</h2>
-            {user?.name && (
-              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#E3FDFD] text-slate-800 border border-[#A6E3E9]">
-                {user.name} ({user.role || 'Admin'})
-              </span>
-            )}
-            {isAuthenticated && (
-              <button
-                onClick={logout}
-                className="bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold px-2.5 py-0.5 rounded-lg transition-colors cursor-pointer ml-1"
-              >
-                Log Out
-              </button>
-            )}
-          </div>
+          <h2 className="text-sm font-bold text-[#71C9CE] uppercase tracking-wider">
+            Welcome Back{user?.name ? ` ${user.name}` : ''}
+          </h2>
           <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">Admin Fleet-Wide Compliance Dashboard</h1>
           <p className="text-sm text-slate-600 mt-0.5 font-medium">
             Proactive compliance monitoring, live backend metrics, risk signals, and override sign-offs across all fleets.

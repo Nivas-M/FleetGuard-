@@ -12,7 +12,7 @@ const fleetManagerRoutes = require("./Routes/fleetManagerRoutes");
 // Feature Modules
 const vehicleRoutes = require("./Modules/vehicles/vehicle.routes");
 const dashboardRoutes = require("./Modules/Dashboard/dashboard.routes");
-const driverModuleRoutes = require("./Routes/driver.routes");
+//const driverModuleRoutes = require("./Routes/driver.routes");
 const assignmentRoutes = require("./Modules/Assignment/assignment.routes");
 const mechanicRoutes =require("./Routes/mechanicRoutes");
 
@@ -36,7 +36,7 @@ app.use("/api/fleet-manager", fleetManagerRoutes);
 // Feature APIs
 app.use("/vehicles", vehicleRoutes);
 app.use("/fleet-manager/dashboard", dashboardRoutes);
-app.use("/drivers", driverModuleRoutes);
+//app.use("/drivers", driverModuleRoutes);
 app.use("/assignments", assignmentRoutes);
 
 app.use(

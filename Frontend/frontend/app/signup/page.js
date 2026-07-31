@@ -19,7 +19,7 @@ export default function SignupPage() {
         'fleet-manager': 'Fleet Manager',
         'admin': 'Admin',
         'driver': 'Driver',
-        'service-center': 'Service Center',
+        'service-center': 'Mechanic',
     };
 
     const handleSignup = async (e) => {
@@ -209,8 +209,8 @@ export default function SignupPage() {
                     </div>
                 </div>
 
-                {/* Right Column: Hero Cover Image Frame */}
-                <div className="lg:col-span-6 flex justify-center lg:justify-end">
+                {/* Right Column: Hero Cover Image Frame (Hidden on Mobile) */}
+                <div className="hidden lg:flex lg:col-span-6 justify-end">
                     <div className="w-full max-w-lg lg:max-w-none h-[480px] sm:h-[540px] lg:h-[640px] rounded-3xl overflow-hidden border border-slate-200 shadow-md relative group bg-slate-100">
                         <img
                             src="/images/logincover.png"
