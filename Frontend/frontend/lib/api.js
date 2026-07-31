@@ -25,19 +25,27 @@ api.interceptors.request.use(
     }
 );
 
-// Response interceptor for global auth error handling
+// Response interceptor for global auth error handling & automatic logout fallback
 api.interceptors.response.use(
     (response) => response,
     (error) => {
-        if (error.response && error.response.status === 401) {
-            if (typeof window !== 'undefined') {
-                const currentPath = window.location.pathname;
-                if (currentPath !== '/login' && currentPath !== '/signup') {
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('accessToken');
-                    localStorage.removeItem('user');
-                    window.location.href = '/login';
-                }
+        if (typeof window !== 'undefined') {
+            const currentPath = window.location.pathname;
+            const status = error.response?.status;
+            const errorMsg = error.response?.data?.message || error.message || '';
+
+            // Detect invalid session, 401 Unauthorized, or profile database coercion failure
+            const isProfileError = errorMsg.includes('Cannot coerce the result') || 
+                                   errorMsg.includes('single JSON object') ||
+                                   errorMsg.includes('JWT') ||
+                                   errorMsg.includes('token');
+
+            if (status === 401 || (isProfileError && currentPath !== '/login' && currentPath !== '/signup')) {
+                console.warn('Session or Profile error detected. Triggering automatic logout fallback...');
+                localStorage.removeItem('token');
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('user');
+                window.location.href = '/login';
             }
         }
         return Promise.reject(error);

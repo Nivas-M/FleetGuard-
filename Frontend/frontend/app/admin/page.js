@@ -64,7 +64,7 @@ import { useAuth } from '../context/AuthContext';
 
 export default function AdminDashboard() {
   const router = useRouter();
-  const { user, isAuthenticated, isLoading: authLoading } = useAuth();
+  const { user, isAuthenticated, isLoading: authLoading, logout } = useAuth();
 
   // Backend Data State
   const [summary, setSummary] = useState(null);
@@ -271,6 +271,14 @@ export default function AdminDashboard() {
               <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#E3FDFD] text-slate-800 border border-[#A6E3E9]">
                 {user.name} ({user.role || 'Admin'})
               </span>
+            )}
+            {isAuthenticated && (
+              <button
+                onClick={logout}
+                className="bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold px-2.5 py-0.5 rounded-lg transition-colors cursor-pointer ml-1"
+              >
+                Log Out
+              </button>
             )}
           </div>
           <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">Admin Fleet-Wide Compliance Dashboard</h1>
