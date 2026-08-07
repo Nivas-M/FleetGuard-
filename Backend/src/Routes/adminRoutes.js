@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { getDashboard } = require('../Controllers/adminController');
+const {
+    getDashboard,
+    approveOverrideRequest,
+    rejectOverrideRequest
+} = require("../Controllers/adminController");
 const { getVehicles, getVehicleById } = require('../Controllers/vehicleController');
 
 const authMiddleware = require("../Middleware/authMiddleware");
@@ -27,6 +31,20 @@ router.get(
     "/dashboard",
     authMiddleware,
     getDashboard
+);
+
+router.put(
+    "/override-requests/:requestId/approve",
+    authMiddleware,
+    roleMiddleware("Admin"),
+    approveOverrideRequest
+);
+
+router.put(
+    "/override-requests/:requestId/reject",
+    authMiddleware,
+    roleMiddleware("Admin"),
+    rejectOverrideRequest
 );
 
 router.get('/vehicles', getVehicles);

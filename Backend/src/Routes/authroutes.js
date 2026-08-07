@@ -17,19 +17,7 @@ router.get("/test", authMiddleware, (req, res) => {
     });
 });
 
-router.get(
-    "/admin",
-    authMiddleware,
-    roleMiddleware("Admin"),
-    (req, res) => {
-        res.json({
-            success: true,
-            message: "Welcome Admin",
-            user: req.user,
-            role: req.role,
-        });
-    }
-);
+
 
 module.exports = router;
 console.log("Auth routes loaded");

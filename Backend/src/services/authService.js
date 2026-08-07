@@ -43,12 +43,28 @@ const login = async ({ email, password }) => {
         throw new Error(error.message);
     }
 
+    const { data: profile, error: profileError } = await supabase
+        .from("profiles")
+        .select("id, name, role")
+        .eq("id", data.user.id)
+        .single();
+
+    if (profileError) {
+        throw new Error(profileError.message);
+    }
+
     return {
         success: true,
         message: "Login successful",
         accessToken: data.session.access_token,
         refreshToken: data.session.refresh_token,
-        user: data.user,
+
+        user: {
+            id: profile.id,
+            name: profile.name,
+            email: data.user.email,
+            role: profile.role
+        }
     };
 };
 

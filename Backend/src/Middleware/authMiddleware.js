@@ -1,49 +1,54 @@
-const supabase = require("../Config/supabase");
+    const supabase = require("../Config/supabase");
 
-const authMiddleware = async (req, res, next) => {
-  try {
-    const authHeader = req.headers.authorization;
+    const authMiddleware = async (req, res, next) => {
+        try {
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({
-        success: false,
-        message: "Access token is required",
-      });
-    }
+            const authHeader = req.headers.authorization;
 
-    const token = authHeader.split(" ")[1];
+            if (!authHeader || !authHeader.startsWith("Bearer ")) {
+                return res.status(401).json({
+                    success: false,
+                    message: "Access token is required",
+                });
+            }
 
-    const { data, error } = await supabase.auth.getUser(token);
+            const token = authHeader.split(" ")[1];
 
-    if (error || !data.user) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid token",
-      });
-    }
+            const { data, error } = await supabase.auth.getUser(token);
 
-    const { data: profile, error: profileError } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", data.user.id)
-      .maybeSingle();
+            if (error || !data.user) {
+                return res.status(401).json({
+                    success: false,
+                    message: "Invalid or expired token",
+                });
+            }
 
-    if (profileError) {
-      return res.status(500).json({
-        success: false,
-        message: profileError.message,
-      });
-    }
+            const { data: profile, error: profileError } = await supabase
+                .from("profiles")
+                .select("*")
+                .eq("id", data.user.id)
+                .maybeSingle();
 
-    req.user = data.user;
+            if (profileError) {
+                return res.status(500).json({
+                    success: false,
+                    message: profileError.message,
+                });
+            }
 
-    next();
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: err.message,
-    });
-  }
-};
+            req.user = data.user;
+            req.profile = profile;
 
-module.exports = authMiddleware;
+            next();
+
+        } catch (err) {
+
+            return res.status(500).json({
+                success: false,
+                message: err.message,
+            });
+
+        }
+    };
+
+    module.exports = authMiddleware;
